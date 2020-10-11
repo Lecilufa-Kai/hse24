@@ -1,12 +1,12 @@
-GET {{protocol}}{{host}}:{{port}}/exchange-rate-api/currencies/reference-rate?source=USD&target=EUR
+GET {{protocol}}{{host}}:{{port}}/exchange-rate-service/currencies/reference-rate?source=USD&target=EUR
 content-type: application/json
 
 ###
-GET {{protocol}}{{host}}:{{port}}/exchange-rate-api/currencies/convert-rate?source=EUR&target=GBP&sourceAmount=1
+GET {{protocol}}{{host}}:{{port}}/exchange-rate-service/currencies/convert-rate?source=EUR&target=GBP&sourceAmount=1
 content-type: application/json
 
 ###
-GET {{protocol}}{{host}}:{{port}}/exchange-rate-api/currencies
+GET {{protocol}}{{host}}:{{port}}/exchange-rate-service/currencies
 content-type: application/json
 
 
