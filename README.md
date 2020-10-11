@@ -11,8 +11,8 @@ At project root, run mvn spring-boot:run, or directly run it on your IDE.
 
 **how to run with docker**<br>
 1.At project root,run mvn clean package<br>
-2.At project root,run docker build -t kai/currency-api . <br>
-3.At project root,docker run -p 8123:8123 kai/currency-api
+2.At project root,run docker build -t kai/exchange-rate-service . <br>
+3.At project root,docker run -p 8123:8123 kai/exchange-rate-service
 
 **how to test api endpoints**<br>
 The file Currency.http defines all the test cases for the endpoints.<br>
