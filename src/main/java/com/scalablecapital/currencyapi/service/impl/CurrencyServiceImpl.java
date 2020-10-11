@@ -20,6 +20,7 @@ public class CurrencyServiceImpl implements CurrencyService {
 
     //to limit the thread amount when there are too many requests coming at the same time
     private final ExecutorService executor = Executors.newFixedThreadPool(100);
+
     private final static String LINK_TEMPLATE = "https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/eurofxref-graph-%s.en.html";
 
     @Override
@@ -101,14 +102,11 @@ public class CurrencyServiceImpl implements CurrencyService {
         return currencyConversionDto;
     }
 
-
     private void updateCurrencyVisits(final Currency currency) {
-        executor.execute(() -> updateVisits(currency));
-    }
-
-    private void updateVisits(Currency currency) {
-        synchronized (currency) {
-            currency.setVisits(currency.getVisits() + 1);
-        }
+        executor.execute(() -> {
+            synchronized (currency) {
+                currency.setVisits(currency.getVisits() + 1);
+            }
+        });
     }
 }
