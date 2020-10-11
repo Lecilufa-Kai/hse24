@@ -10,26 +10,23 @@ public class ReferenceRateDto {
         return currencyPair;
     }
 
-    public ReferenceRateDto setCurrencyPair(String currencyPair) {
+    public void setCurrencyPair(String currencyPair) {
         this.currencyPair = currencyPair;
-        return this;
     }
 
     public Double getReferenceRate() {
         return referenceRate;
     }
 
-    public ReferenceRateDto setReferenceRate(Double referenceRate) {
+    public void setReferenceRate(Double referenceRate) {
         this.referenceRate = referenceRate;
-        return this;
     }
 
     public String getLink() {
         return link;
     }
 
-    public ReferenceRateDto setLink(String link) {
+    public void setLink(String link) {
         this.link = link;
-        return this;
     }
 }

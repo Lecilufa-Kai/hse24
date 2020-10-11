@@ -11,35 +11,31 @@ public class CurrencyConversionDto {
         return source;
     }
 
-    public CurrencyConversionDto setSource(String source) {
+    public void setSource(String source) {
         this.source = source;
-        return this;
     }
 
     public Double getSourceAmount() {
         return sourceAmount;
     }
 
-    public CurrencyConversionDto setSourceAmount(Double sourceAmount) {
+    public void setSourceAmount(Double sourceAmount) {
         this.sourceAmount = sourceAmount;
-        return this;
     }
 
     public String getTarget() {
         return target;
     }
 
-    public CurrencyConversionDto setTarget(String target) {
+    public void setTarget(String target) {
         this.target = target;
-        return this;
     }
 
     public Double getTargetAmount() {
         return targetAmount;
     }
 
-    public CurrencyConversionDto setTargetAmount(Double targetAmount) {
+    public void setTargetAmount(Double targetAmount) {
         this.targetAmount = targetAmount;
-        return this;
     }
 }

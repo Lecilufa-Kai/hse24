@@ -39,7 +39,7 @@ public class CurrencyControllerTest {
         ObjectMapper mapper = new ObjectMapper();
         String jsonStr = mapper.writeValueAsString(referenceRateDto);
 
-        Mockito.when(currencyService.currenciesReferenceRate(any(), any())).thenReturn(referenceRateDto);
+        Mockito.when(currencyService.getCurrenciesReferenceRate(any(), any())).thenReturn(referenceRateDto);
 
         mockMvc.perform(
                 MockMvcRequestBuilders.get("/currencies/reference-rate?source=DKK&target=EUR")

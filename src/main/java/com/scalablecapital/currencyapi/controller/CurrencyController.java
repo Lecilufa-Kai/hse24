@@ -27,30 +27,23 @@ public class CurrencyController {
 
     @GetMapping("currencies/reference-rate")
     public ResponseEntity<ReferenceRateDto> currenciesReferenceRate(
-            @Pattern(regexp = "[A-Z]{3}" ,message = "source currency should be 3 Capital letters") @RequestParam String source,
-            @Pattern(regexp = "[A-Z]{3}" ,message = "target currency should be 3 Capital letters") @RequestParam String target
-    ){
-        return ResponseEntity.ok().body(currencyService.currenciesReferenceRate(source, target));
+            @Pattern(regexp = "[A-Z]{3}", message = "source currency should be 3 Capital letters") @RequestParam String source,
+            @Pattern(regexp = "[A-Z]{3}", message = "target currency should be 3 Capital letters") @RequestParam String target
+    ) {
+        return ResponseEntity.ok().body(currencyService.getCurrenciesReferenceRate(source, target));
     }
 
     @GetMapping("currencies/convert-rate")
     public ResponseEntity<CurrencyConversionDto> convertCurrencies(
-            @Pattern(regexp = "[A-Z]{3}" ,message = "source currency should be 3 Capital letters") @RequestParam String source,
-            @RequestParam @Min(0) Double sourceAmount,
-            @Pattern(regexp = "[A-Z]{3}" ,message = "target currency should be 3 Capital letters") String target
-    ){
-        CurrencyConversionDto response = new CurrencyConversionDto();
-        response.setSource(source);
-        response.setSourceAmount(sourceAmount);
-        response.setTarget(target);
-        response.setTargetAmount(123.0);
-
-        return ResponseEntity.ok().body(response);
+            @Pattern(regexp = "[A-Z]{3}", message = "source currency should be 3 Capital letters") @RequestParam String source,
+            @RequestParam @Min(0) double sourceAmount,
+            @Pattern(regexp = "[A-Z]{3}", message = "target currency should be 3 Capital letters") String target
+    ) {
+        return ResponseEntity.ok().body(currencyService.getCurrencyConversion(source, sourceAmount, target));
     }
 
-
     @GetMapping("currencies")
-    public ResponseEntity<List<Currency>> getAllCurrencies(){
+    public ResponseEntity<List<Currency>> getAllCurrencies() {
         return ResponseEntity.ok().body(currencyService.getAllCurrencies());
     }
 }
