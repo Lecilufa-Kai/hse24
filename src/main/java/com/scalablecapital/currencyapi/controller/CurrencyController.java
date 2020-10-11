@@ -18,9 +18,10 @@ import java.util.List;
 
 @Validated
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/exchange-rate-api")
 public class CurrencyController {
 
+    //TODO documentation for models and API
     private final CurrencyService currencyService;
 
     public CurrencyController(CurrencyService currencyService) {
