@@ -1,4 +1,4 @@
-GET {{protocol}}{{host}}:{{port}}/currencies/reference-rate?source=USD&target=GBP
+GET {{protocol}}{{host}}:{{port}}/currencies/reference-rate?source=USD&target=USD
 content-type: application/json
 
 ###

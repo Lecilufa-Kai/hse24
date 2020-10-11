@@ -6,31 +6,29 @@ import com.scalablecapital.currencyapi.dto.ReferenceRateDto;
 import com.scalablecapital.currencyapi.entity.Currency;
 import com.scalablecapital.currencyapi.exception.CurrencyNotFoundException;
 import com.scalablecapital.currencyapi.service.CurrencyService;
-import com.scalablecapital.currencyapi.service.DataApi;
 import org.springframework.stereotype.Service;
 
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 @Service
 public class CurrencyServiceImpl implements CurrencyService {
 
-    private final DataApi dataApi;
+    //to limit the thread amount when there are too many requests coming at the same time
+    private final ExecutorService executor = Executors.newFixedThreadPool(100);
     private final static String LINK_TEMPLATE = "https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/eurofxref-graph-%s.en.html";
-
-    public CurrencyServiceImpl(DataApi dataApi) {
-        this.dataApi = dataApi;
-    }
 
     @Override
     public @NotNull ReferenceRateDto getCurrenciesReferenceRate(@NotNull String source, @NotNull String target) {
         Currency sourceCurrency = findCurrency(source);
         Currency targetCurrency = findCurrency(target);
 
-        dataApi.updateCurrencyVisits(sourceCurrency);
-        dataApi.updateCurrencyVisits(targetCurrency);
+        updateCurrencyVisits(sourceCurrency);
+        updateCurrencyVisits(targetCurrency);
 
         return buildReferenceRate(sourceCurrency, targetCurrency);
     }
@@ -80,8 +78,8 @@ public class CurrencyServiceImpl implements CurrencyService {
         Currency sourceCurrency = findCurrency(source);
         Currency targetCurrency = findCurrency(target);
 
-        dataApi.updateCurrencyVisits(sourceCurrency);
-        dataApi.updateCurrencyVisits(targetCurrency);
+        updateCurrencyVisits(sourceCurrency);
+        updateCurrencyVisits(targetCurrency);
 
         return buildCurrencyConversion(sourceCurrency, targetCurrency, sourceAmount);
     }
@@ -101,5 +99,16 @@ public class CurrencyServiceImpl implements CurrencyService {
         currencyConversionDto.setTargetAmount(targetAmount);
 
         return currencyConversionDto;
+    }
+
+
+    private void updateCurrencyVisits(final Currency currency) {
+        executor.execute(() -> updateVisits(currency));
+    }
+
+    private void updateVisits(Currency currency) {
+        synchronized (currency) {
+            currency.setVisits(currency.getVisits() + 1);
+        }
     }
 }
