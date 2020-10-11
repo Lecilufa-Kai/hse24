@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.scalable-capital</groupId>
-	<artifactId>currency-api</artifactId>
+	<artifactId>exchange-rate-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>currency-api</name>
+	<name>exchange-rate-service</name>
 	<description>API for ECB currency information</description>
 
 	<properties>
