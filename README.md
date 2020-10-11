@@ -4,10 +4,10 @@ Java version=openjdk version "11"
 At project root, run mvn clean package
 
 **how to run Unit Tests**<br>
-At project root, run mvn clean test, or directly run tests on your IDE
+At project root, run mvn clean test, or directly run tests on your IDE.
 
 **how to run Application**<br>
-At project root, run mvn spring-boot:run, or directly run it on your IDE
+At project root, run mvn spring-boot:run, or directly run it on your IDE.
 
 **how to run with docker**<br>
 1.At project root,run mvn clean package<br>
