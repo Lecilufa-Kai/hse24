@@ -64,7 +64,7 @@ public class CurrencyServiceImpl implements CurrencyService {
                 .findAny().orElse(null);
 
         if (result == null) {
-            throw new CurrencyNotFoundException("currency" + abbreviation + " not found");
+            throw new CurrencyNotFoundException("currency " + abbreviation + " not found");
         }
         return result;
     }
