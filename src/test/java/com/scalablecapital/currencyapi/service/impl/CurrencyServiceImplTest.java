@@ -86,6 +86,7 @@ public class CurrencyServiceImplTest {
         currencyService.getCurrencyConversion("JPY",15,"EUR");
 
         List<Currency> currencies = currencyService.getAllCurrencies();
+
         Currency jpy = currencies.stream()
                 .filter(currency -> currency.getAbbreviation().equals("JPY")).findFirst().orElse(null);
 
