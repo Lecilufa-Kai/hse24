@@ -18,5 +18,5 @@ At project root, mvn spring-boot:run, or directly run it on your IDE.
 The file Currency.http defines all the test cases for the endpoints.<br>
 You can run it with IntelliJ or use the definition to run it on any HTTP client. eg. Postman
 
-**API Documantation
-http://localhost:8123/swagger-ui.html#/
+**API Documentation Swagger UI**<br>
+After application startup, visit http://localhost:8123/swagger-ui.html#/
