@@ -1,6 +1,6 @@
 package com.scalablecapital.currencyapi.service.impl;
 
-import com.scalablecapital.currencyapi.db.DataHolder;
+import com.scalablecapital.currencyapi.repository.CurrencyRepository;
 import com.scalablecapital.currencyapi.dto.CurrencyConversionDto;
 import com.scalablecapital.currencyapi.dto.ReferenceRateDto;
 import com.scalablecapital.currencyapi.entity.Currency;
@@ -9,6 +9,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.List;
@@ -19,12 +21,16 @@ import static org.junit.Assert.assertNotNull;
 @RunWith(MockitoJUnitRunner.class)
 public class CurrencyServiceImplTest {
 
+    @Mock
+    CurrencyRepository currencyRepository;
+
     @InjectMocks
     CurrencyServiceImpl currencyService;
 
     @Before
     public void setUpDB(){
 
+        /*
         DataHolder.currencyDB.clear();
 
         Currency USD = new Currency(1,"US dollar","USD",1.1795,0L);
@@ -44,10 +50,16 @@ public class CurrencyServiceImplTest {
         DataHolder.currencyDB.add(GBP);
         DataHolder.currencyDB.add(HUF);
         DataHolder.currencyDB.add(EUR);
+        */
     }
 
     @Test
     public void referenceRateForUSD_EUR() {
+
+        Currency USD = new Currency(1,"US dollar","USD",1.1795,0L);
+        Currency EUR = new Currency(8,"Europe","EUR",1,0L);
+        Mockito.when(currencyRepository.findCurrency("USD")).thenReturn(USD);
+        Mockito.when(currencyRepository.findCurrency("EUR")).thenReturn(EUR);
 
         String link = "https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/eurofxref-graph-usd.en.html";
 
@@ -61,6 +73,11 @@ public class CurrencyServiceImplTest {
 
     @Test
     public void referenceRateForJPY_USD() {
+
+        Currency USD = new Currency(1,"US dollar","USD",1.1795,0L);
+        Currency JPY = new Currency(2,"Japanese yen","JPY",124.95,0L);
+        Mockito.when(currencyRepository.findCurrency("USD")).thenReturn(USD);
+        Mockito.when(currencyRepository.findCurrency("JPY")).thenReturn(JPY);
 
         String link = "https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/eurofxref-graph-jpy.en.html";
 
