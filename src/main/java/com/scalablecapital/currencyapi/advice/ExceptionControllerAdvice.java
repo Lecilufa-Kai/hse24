@@ -1,7 +1,9 @@
 package com.scalablecapital.currencyapi.advice;
 
-import com.scalablecapital.currencyapi.exception.CurrencyNotFoundException;
 import com.scalablecapital.currencyapi.dto.ErrorDto;
+import com.scalablecapital.currencyapi.exception.CurrencyNotFoundException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -11,6 +13,8 @@ import javax.validation.ConstraintViolationException;
 
 @ControllerAdvice
 public class ExceptionControllerAdvice {
+
+    private final Logger logger = LoggerFactory.getLogger(ExceptionControllerAdvice.class);
 
     @ExceptionHandler({ConstraintViolationException.class})
     public ResponseEntity<ErrorDto> handleValidationException(ConstraintViolationException ex) {
@@ -29,6 +33,7 @@ public class ExceptionControllerAdvice {
                             .setErrorType(statusCode.toString());
                 });
 
+        logger.warn("Data validation error", ex);
         return ResponseEntity.status(statusCode).body(errorDto);
     }
 
@@ -48,6 +53,22 @@ public class ExceptionControllerAdvice {
                 .setMessage(ex.getMessage())
                 .setErrorType(statusCode.toString());
 
+        logger.warn("Data not found error", ex);
+        return ResponseEntity.status(statusCode).body(errorDto);
+    }
+
+    @ExceptionHandler({RuntimeException.class})
+    public ResponseEntity<ErrorDto> handleRuntimeException(RuntimeException ex) {
+
+        final ErrorDto errorDto = new ErrorDto();
+
+        HttpStatus statusCode = HttpStatus.INTERNAL_SERVER_ERROR;
+
+        errorDto.setStatusCode(statusCode.value())
+                .setMessage(ex.getMessage())
+                .setErrorType(statusCode.toString());
+
+        logger.error("Internal server error", ex);
         return ResponseEntity.status(statusCode).body(errorDto);
     }
 }
