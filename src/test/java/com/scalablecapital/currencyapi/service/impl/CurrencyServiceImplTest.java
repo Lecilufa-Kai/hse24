@@ -1,19 +1,16 @@
 package com.scalablecapital.currencyapi.service.impl;
 
-import com.scalablecapital.currencyapi.repository.CurrencyRepository;
 import com.scalablecapital.currencyapi.dto.CurrencyConversionDto;
 import com.scalablecapital.currencyapi.dto.ReferenceRateDto;
 import com.scalablecapital.currencyapi.entity.Currency;
 import com.scalablecapital.currencyapi.exception.CurrencyNotFoundException;
-import org.junit.Before;
+import com.scalablecapital.currencyapi.repository.CurrencyRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
-
-import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
