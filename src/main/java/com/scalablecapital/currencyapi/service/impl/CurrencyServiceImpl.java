@@ -29,6 +29,7 @@ public class CurrencyServiceImpl implements CurrencyService {
         Currency sourceCurrency = currencyRepository.findCurrency(source);
         Currency targetCurrency = currencyRepository.findCurrency(target);
 
+        //use a thread to update visits,return immediately, not blocking main thread.
         currencyRepository.updateCurrencyVisits(sourceCurrency);
         currencyRepository.updateCurrencyVisits(targetCurrency);
 
@@ -66,6 +67,7 @@ public class CurrencyServiceImpl implements CurrencyService {
         Currency sourceCurrency = currencyRepository.findCurrency(source);
         Currency targetCurrency = currencyRepository.findCurrency(target);
 
+        //use a thread to update visits,return immediately, not blocking main thread.
         currencyRepository.updateCurrencyVisits(sourceCurrency);
         currencyRepository.updateCurrencyVisits(targetCurrency);
 
