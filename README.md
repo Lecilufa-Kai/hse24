@@ -14,6 +14,11 @@ At project root, mvn spring-boot:run, or directly run it on your IDE.
 2.At project root, docker build -t kai/exchange-rate-service . <br>
 3.At project root, docker run -p 8123:8123 kai/exchange-rate-service
 
+**how to stop application in docker**<br>
+1.At project root, docker ps , find the 'CONTAINER ID'
+2.At project root, docker stop 'CONTAINER ID' <br>
+
+
 **how to test api endpoints**<br>
 The file Currency.http defines all the test cases for the endpoints.<br>
 You can run it with IntelliJ or use the definition to run it on any HTTP client. eg. Postman
