@@ -15,7 +15,7 @@ import java.util.concurrent.Executors;
 public class CurrencyRepositoryImpl implements CurrencyRepository {
 
     //to limit the thread amount when there are too many requests coming at the same time
-    private final ExecutorService executor = Executors.newFixedThreadPool(100);
+    private final ExecutorService fixedThreadPool = Executors.newFixedThreadPool(100);
 
     @Override
     @NotNull
@@ -33,7 +33,7 @@ public class CurrencyRepositoryImpl implements CurrencyRepository {
 
     @Override
     public void updateCurrencyVisits(final Currency currency) {
-        executor.execute(() -> {
+        fixedThreadPool.execute(() -> {
             synchronized (currency) {
                 currency.setVisits(currency.getVisits() + 1);
             }

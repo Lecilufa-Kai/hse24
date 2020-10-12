@@ -6,9 +6,12 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 public interface CurrencyRepository {
-    @NotNull Currency findCurrency(String abbreviation);
+    
+    @NotNull
+    Currency findCurrency(@NotNull String abbreviation);
 
-    void updateCurrencyVisits(Currency currency);
+    void updateCurrencyVisits(@NotNull Currency currency);
 
+    @NotNull
     List<Currency> getAllCurrencies();
 }
