@@ -15,7 +15,7 @@ At project root, mvn spring-boot:run, or directly run it on your IDE.
 3.At project root, docker run -p 8123:8123 kai/exchange-rate-service
 
 **how to stop application in docker**<br>
-1.At project root, docker ps , find the 'CONTAINER ID'
+1.At project root, docker ps , find the 'CONTAINER ID' <br>
 2.At project root, docker stop 'CONTAINER ID' <br>
 
 
