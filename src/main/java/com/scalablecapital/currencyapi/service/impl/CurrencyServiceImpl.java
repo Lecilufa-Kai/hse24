@@ -19,6 +19,7 @@ public class CurrencyServiceImpl implements CurrencyService {
 
     private final static String LINK_TEMPLATE = "https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/eurofxref-graph-%s.en.html";
 
+    //Constructor injection don't need @Autowired, inject dependencies by spring boot
     public CurrencyServiceImpl(CurrencyRepository currencyRepository) {
         this.currencyRepository = currencyRepository;
     }

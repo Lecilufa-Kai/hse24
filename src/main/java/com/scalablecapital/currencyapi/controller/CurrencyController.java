@@ -4,6 +4,7 @@ import com.scalablecapital.currencyapi.entity.Currency;
 import com.scalablecapital.currencyapi.dto.CurrencyConversionDto;
 import com.scalablecapital.currencyapi.dto.ReferenceRateDto;
 import com.scalablecapital.currencyapi.service.CurrencyService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,6 +25,7 @@ public class CurrencyController {
     //TODO documentation for models and API
     private final CurrencyService currencyService;
 
+    //Constructor injection don't need @Autowired, inject dependencies by spring boot
     public CurrencyController(CurrencyService currencyService) {
         this.currencyService = currencyService;
     }
