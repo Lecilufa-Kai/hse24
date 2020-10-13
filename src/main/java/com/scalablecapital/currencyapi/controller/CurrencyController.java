@@ -42,7 +42,7 @@ public class CurrencyController {
     public ResponseEntity<CurrencyConversionDto> convertCurrencies(
             @Pattern(regexp = "[A-Z]{3}", message = "source currency should be 3 Capital letters") @RequestParam String source,
             @RequestParam @Min(0) double sourceAmount,
-            @Pattern(regexp = "[A-Z]{3}", message = "target currency should be 3 Capital letters") String target
+            @Pattern(regexp = "[A-Z]{3}", message = "target currency should be 3 Capital letters") @RequestParam String target
     ) {
         return ResponseEntity.ok().body(currencyService.getCurrencyConversion(source, sourceAmount, target));
     }
