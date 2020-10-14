@@ -1,8 +1,8 @@
-GET {{protocol}}{{host}}:{{port}}/exchange-rate-service/currencies/reference-rate?source=USD&target=EUR
+GET {{protocol}}{{host}}:{{port}}/exchange-rate-service/currencies/reference-rate?source=USD&target=EURG
 content-type: application/json
 
 ###
-GET {{protocol}}{{host}}:{{port}}/exchange-rate-service/currencies/convert-rate?source=EUR&target=GBP&sourceAmount=1
+GET {{protocol}}{{host}}:{{port}}/exchange-rate-service/currencies/convert-rate?source=USD&target=GBP&sourceAmount=15
 content-type: application/json
 
 ###

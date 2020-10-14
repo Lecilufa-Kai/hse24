@@ -1,15 +1,15 @@
 package com.scalablecapital.currencyapi.repository.impl;
 
-import com.scalablecapital.currencyapi.repository.CurrencyRepository;
-import com.scalablecapital.currencyapi.db.DataHolder;
-import com.scalablecapital.currencyapi.entity.Currency;
-import com.scalablecapital.currencyapi.exception.CurrencyNotFoundException;
-import org.springframework.stereotype.Repository;
-
-import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import javax.validation.constraints.NotNull;
+
+import com.scalablecapital.currencyapi.db.DataHolder;
+import com.scalablecapital.currencyapi.entity.Currency;
+import com.scalablecapital.currencyapi.exception.CurrencyNotFoundException;
+import com.scalablecapital.currencyapi.repository.CurrencyRepository;
+import org.springframework.stereotype.Repository;
 
 @Repository
 public class CurrencyRepositoryImpl implements CurrencyRepository {
@@ -21,14 +21,10 @@ public class CurrencyRepositoryImpl implements CurrencyRepository {
     @NotNull
     public Currency findCurrency(String abbreviation) {
 
-        Currency result = DataHolder.currencyDB.stream()
-                .filter(currency -> currency.getAbbreviation().equals(abbreviation))
-                .findAny().orElse(null);
-
-        if (result == null) {
-            throw new CurrencyNotFoundException("currency " + abbreviation + " not found");
-        }
-        return result;
+        return DataHolder.currencyDB.stream()
+                                    .filter(currency -> currency.getAbbreviation().equals(abbreviation))
+                                    .findAny()
+                                    .orElseThrow(() -> new CurrencyNotFoundException("Currency " + abbreviation + " not found."));
     }
 
     @Override
