@@ -1,4 +1,4 @@
-GET {{protocol}}{{host}}:{{port}}/exchange-rate-service/currencies/reference-rate?source=USD&target=EURG
+GET {{protocol}}{{host}}:{{port}}/exchange-rate-service/currencies/reference-rate?source=USD&target=EUR
 content-type: application/json
 
 ###
