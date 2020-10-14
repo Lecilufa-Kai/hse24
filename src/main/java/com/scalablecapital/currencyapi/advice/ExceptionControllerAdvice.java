@@ -26,9 +26,7 @@ public class ExceptionControllerAdvice {
 
         ex.getConstraintViolations()
           .stream().findFirst()
-          .ifPresent(violation -> {
-              errorDto.setMessage(violation.getMessage());
-          });
+          .ifPresent(violation -> errorDto.setMessage(violation.getMessage()));
 
         logger.warn("Data validation error", ex);
         return ResponseEntity.status(statusCode).body(errorDto);
@@ -72,12 +70,9 @@ public class ExceptionControllerAdvice {
         String message,
         String errorType
     ) {
-        final ErrorDto errorDto = new ErrorDto();
-
-        errorDto.setStatusCode(statusCode)
-                .setMessage(message)
-                .setErrorType(errorType);
-
-        return errorDto;
+        return new ErrorDto()
+                   .setStatusCode(statusCode)
+                   .setMessage(message)
+                   .setErrorType(errorType);
     }
 }
