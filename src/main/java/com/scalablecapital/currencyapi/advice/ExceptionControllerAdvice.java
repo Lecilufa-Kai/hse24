@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 @ControllerAdvice
 public class ExceptionControllerAdvice {
@@ -19,56 +20,64 @@ public class ExceptionControllerAdvice {
     @ExceptionHandler({ConstraintViolationException.class})
     public ResponseEntity<ErrorDto> handleValidationException(ConstraintViolationException ex) {
 
-        final ErrorDto errorDto = new ErrorDto();
-
         HttpStatus statusCode = HttpStatus.BAD_REQUEST;
 
+        final ErrorDto errorDto = buildErrorDto(statusCode.value(), null, statusCode.toString());
+
         ex.getConstraintViolations()
-                .stream().findFirst()
-                .ifPresent(violation -> {
-                    String fieldName = getFieldName(violation.getPropertyPath().toString());
-                    errorDto.setStatusCode(statusCode.value())
-                            .setMessage(violation.getMessage())
-                            .setField(fieldName)
-                            .setErrorType(statusCode.toString());
-                });
+          .stream().findFirst()
+          .ifPresent(violation -> {
+              errorDto.setMessage(violation.getMessage());
+          });
 
         logger.warn("Data validation error", ex);
         return ResponseEntity.status(statusCode).body(errorDto);
     }
 
-    private String getFieldName(String filedPath) {
-        return filedPath.substring(filedPath.lastIndexOf('.') + 1);
-    }
+    @ExceptionHandler({MethodArgumentTypeMismatchException.class})
+    public ResponseEntity<ErrorDto> handleMethodArgumentTypeMismatchException(MethodArgumentTypeMismatchException ex) {
 
+        HttpStatus statusCode = HttpStatus.BAD_REQUEST;
+        logger.warn("Data validation error", ex);
+        return ResponseEntity.status(statusCode)
+                             .body(
+                                 buildErrorDto(statusCode.value(), ex.getMessage(), statusCode.toString())
+                             );
+    }
 
     @ExceptionHandler({CurrencyNotFoundException.class})
     public ResponseEntity<ErrorDto> handleCurrencyNotFoundException(CurrencyNotFoundException ex) {
 
-        final ErrorDto errorDto = new ErrorDto();
-
         HttpStatus statusCode = HttpStatus.NOT_FOUND;
-
-        errorDto.setStatusCode(statusCode.value())
-                .setMessage(ex.getMessage())
-                .setErrorType(statusCode.toString());
-
         logger.warn("Data not found error", ex);
-        return ResponseEntity.status(statusCode).body(errorDto);
+        return ResponseEntity.status(statusCode)
+                             .body(
+                                 buildErrorDto(statusCode.value(), ex.getMessage(), statusCode.toString())
+                             );
     }
 
     @ExceptionHandler({RuntimeException.class})
     public ResponseEntity<ErrorDto> handleRuntimeException(RuntimeException ex) {
 
+        HttpStatus statusCode = HttpStatus.INTERNAL_SERVER_ERROR;
+        logger.error("Internal server error", ex);
+        return ResponseEntity.status(statusCode)
+                             .body(
+                                 buildErrorDto(statusCode.value(), ex.getMessage(), statusCode.toString())
+                             );
+    }
+
+    private ErrorDto buildErrorDto(
+        int statusCode,
+        String message,
+        String errorType
+    ) {
         final ErrorDto errorDto = new ErrorDto();
 
-        HttpStatus statusCode = HttpStatus.INTERNAL_SERVER_ERROR;
+        errorDto.setStatusCode(statusCode)
+                .setMessage(message)
+                .setErrorType(errorType);
 
-        errorDto.setStatusCode(statusCode.value())
-                .setMessage(ex.getMessage())
-                .setErrorType(statusCode.toString());
-
-        logger.error("Internal server error", ex);
-        return ResponseEntity.status(statusCode).body(errorDto);
+        return errorDto;
     }
 }

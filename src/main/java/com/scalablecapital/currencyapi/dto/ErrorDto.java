@@ -5,7 +5,6 @@ public class ErrorDto {
     private int statusCode;
     private String errorType;
     private String message;
-    private String field;
 
     public int getStatusCode() {
         return statusCode;
@@ -22,15 +21,6 @@ public class ErrorDto {
 
     public ErrorDto setMessage(String message) {
         this.message = message;
-        return this;
-    }
-
-    public String getField() {
-        return field;
-    }
-
-    public ErrorDto setField(String field) {
-        this.field = field;
         return this;
     }
 
