@@ -128,4 +128,13 @@ public class CurrencyServiceImplTest {
         Mockito.verify(currencyRepository, Mockito.times(1)).updateCurrencyVisits(USD);
         Mockito.verify(currencyRepository, Mockito.times(1)).updateCurrencyVisits(HUF);
     }
+
+    @Test(expected = CurrencyNotFoundException.class)
+    public void currencyConversionWithMalformData() {
+
+        final String malformCurrency = "ABCDEF";
+
+        Mockito.when(currencyRepository.findCurrency(malformCurrency)).thenThrow(new CurrencyNotFoundException("currency not found"));
+        currencyService.getCurrencyConversion(malformCurrency,15,"EUR");
+    }
 }
