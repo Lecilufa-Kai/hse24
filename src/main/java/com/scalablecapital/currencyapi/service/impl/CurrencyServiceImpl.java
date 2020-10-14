@@ -3,7 +3,6 @@ package com.scalablecapital.currencyapi.service.impl;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
-import javax.validation.constraints.NotNull;
 
 import com.scalablecapital.currencyapi.dto.CurrencyConversionDto;
 import com.scalablecapital.currencyapi.dto.ReferenceRateDto;
@@ -25,9 +24,9 @@ public class CurrencyServiceImpl implements CurrencyService {
     }
 
     @Override
-    public @NotNull ReferenceRateDto getCurrenciesReferenceRate(
-        @NotNull String source,
-        @NotNull String target
+    public ReferenceRateDto getCurrenciesReferenceRate(
+        String source,
+        String target
     ) {
         Currency sourceCurrency = currencyRepository.findCurrency(source);
         Currency targetCurrency = currencyRepository.findCurrency(target);
@@ -39,7 +38,6 @@ public class CurrencyServiceImpl implements CurrencyService {
         return buildReferenceRate(sourceCurrency, targetCurrency);
     }
 
-    @NotNull
     private ReferenceRateDto buildReferenceRate(
         Currency sourceCurrency,
         Currency targetCurrency
@@ -69,9 +67,9 @@ public class CurrencyServiceImpl implements CurrencyService {
 
     @Override
     public CurrencyConversionDto getCurrencyConversion(
-        @NotNull String source,
+        String source,
         double sourceAmount,
-        @NotNull String target
+        String target
     ) {
 
         Currency sourceCurrency = currencyRepository.findCurrency(source);
