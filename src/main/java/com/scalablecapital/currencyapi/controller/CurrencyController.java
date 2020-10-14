@@ -27,7 +27,7 @@ public class CurrencyController {
         this.currencyService = currencyService;
     }
 
-    @GetMapping("currencies/reference-rate")
+    @GetMapping(value = "currencies/reference-rate", produces = {"application/json"})
     public ResponseEntity<ReferenceRateDto> currenciesReferenceRate(
         @Pattern(regexp = "[A-Z]{3}", message = "source currency should be 3 Capital letters") @RequestParam String source,
         @Pattern(regexp = "[A-Z]{3}", message = "target currency should be 3 Capital letters") @RequestParam String target
@@ -35,7 +35,7 @@ public class CurrencyController {
         return ResponseEntity.ok().body(currencyService.getCurrenciesReferenceRate(source, target));
     }
 
-    @GetMapping("currencies/convert-rate")
+    @GetMapping(value = "currencies/convert-rate", produces = {"application/json"})
     public ResponseEntity<CurrencyConversionDto> convertCurrencies(
         @Pattern(regexp = "[A-Z]{3}", message = "source currency should be 3 Capital letters") @RequestParam String source,
         @RequestParam @Min(0) double sourceAmount,
@@ -44,7 +44,7 @@ public class CurrencyController {
         return ResponseEntity.ok().body(currencyService.getCurrencyConversion(source, sourceAmount, target));
     }
 
-    @GetMapping("currencies")
+    @GetMapping(value = "currencies", produces = {"application/json"})
     public ResponseEntity<List<Currency>> getAllCurrencies() {
         return ResponseEntity.ok().body(currencyService.getAllCurrencies());
     }
