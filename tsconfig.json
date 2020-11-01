@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "outDir": "./src/main/resources/static/js",
+    "sourceMap": true,
+    "noImplicitAny": true,
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "target": "ES2016",
+    "jsx": "react",
+    "esModuleInterop" : true
+  },
+  "include": [
+    "./src/main/resources/static"
+  ]
+}
