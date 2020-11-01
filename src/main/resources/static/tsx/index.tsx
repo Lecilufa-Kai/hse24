@@ -1,11 +1,10 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import {MyIcon} from './components/MyIcon';
+import {Category} from "./components/Category";
 
 ReactDOM.render(
   <>
-    <MyIcon />
-    <h1>Hello, world 123!</h1>
+    <Category />
   </>
   ,
   document.getElementById('root')
