@@ -1,11 +1,12 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import {Category} from "./components/Category";
+import {CategoryView} from "./components/CategoryView";
+
 
 ReactDOM.render(
-  <>
-    <Category />
-  </>
-  ,
-  document.getElementById('root')
+    <>
+        <CategoryView/>
+    </>
+    ,
+    document.getElementById('root')
 )
