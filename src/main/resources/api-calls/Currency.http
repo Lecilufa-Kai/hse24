@@ -17,3 +17,9 @@ content-type: application/json
 ###  invalid parameters
 GET {{protocol}}{{host}}:{{port}}/exchange-rate-service/currencies/convert-rate?source=USD&target=GBP&sourceAmount=abc
 content-type: application/json
+
+###
+GET {{protocol}}{{host}}:{{port}}/exchange-rate-service/testData
+content-type: application/json
+
+###

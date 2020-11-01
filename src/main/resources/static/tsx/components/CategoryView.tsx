@@ -1,58 +1,8 @@
 import * as React from 'react';
-import {FunctionComponent, useState} from 'react';
-
-import {makeStyles} from '@material-ui/core/styles';
-
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import {TreeItem, TreeView} from "@material-ui/lab";
+import {FunctionComponent, useEffect, useState} from 'react';
 import {OperationPanel} from "./OperationPanel";
-
-
-const useStyles = makeStyles({
-    root: {
-        height: 216,
-        flexGrow: 1,
-        maxWidth: 400,
-    },
-});
-
-
-
-const categories: Category[] = [
-    {
-        id: "c1",
-        name: "Applications",
-        products: [
-            {
-                id: "p1",
-                name: "Calendar"
-            },
-            {
-                id: "p2",
-                name: "Chrome"
-            },
-            {
-                id: "p3",
-                name: "Webstorm"
-            }
-        ]
-    },
-    {
-        id: "c2",
-        name: "Documents",
-        products: [
-            {
-                id: "p4",
-                name: "index.js"
-            },
-            {
-                id: "p5",
-                name: "tree-view.js"
-            }
-        ]
-    }
-]
+import {CategoryDisplay} from "./CategoryDisplay";
+import axios, {AxiosResponse} from 'axios';
 
 export interface Category {
     id: string,
@@ -65,67 +15,69 @@ export interface Product {
     name: string
 }
 
+
+const getCategoriesFromApi = (callback: (c: Category[]) => void) => {
+
+    axios.request({
+        method: 'get',
+        url: 'http://localhost:8123/exchange-rate-service/testData'
+    }).then(function (response: AxiosResponse<Category[]>) {
+        callback(response.data);
+    });
+}
+
+
 export const CategoryView: FunctionComponent
     = () => {
 
-    const classes = useStyles();
-    // const [expanded, setExpanded] = React.useState<string[]>([]);
-    // const [selected, setSelected] = React.useState<string[]>([]);
-    //
-    // const handleToggle = (event: React.ChangeEvent<{}>, nodeIds: string[]) => {
-    //     setExpanded(nodeIds);
-    // };
-    //
-    // const handleSelect = (event: React.ChangeEvent<{}>, nodeIds: string[]) => {
-    //     setSelected(nodeIds);
-    // };
+    const [categoryData, setCategoryData] = useState<Category[]>([]);
+    const [loaded, setLoaded] = useState<boolean>(false);
 
-    const [categoryData, setCategoryData] = useState<Category[]>(categories);
-
-    const [m, setM] = useState<string>('0');
-
-    const addCategory = (c_name:string) => {
-        let newCategory:Category = {
-            id: "c3",
-            name: c_name,
-            products: [
-                {
-                    id: "p11",
-                    name: "Calendar"
-                },
-                {
-                    id: "p22",
-                    name: "Chrome"
-                },
-                {
-                    id: "p33",
-                    name: "Webstorm"
-                }
-            ]
+    useEffect(() => {
+        if(!loaded){
+            getCategoriesFromApi(setCategoryData);
+            setLoaded(true);
         }
+    })
 
-        setCategoryData([...categoryData,newCategory]);
+    const addCategory = (cName: string) => {
+
+        const existedCategory = categoryData.find(c => c.name == cName);
+        if (!existedCategory) {
+            let newCategory: Category = {
+                id: Math.random().toString(),
+                name: cName,
+                products: []
+            }
+            setCategoryData([...categoryData, newCategory]);
+        } else {
+            alert("Category: " + cName + " exists")
+        }
     }
 
+    const addProduct = (cName: string, pName: string) => {
+        const existedCategory = categoryData.find(c => c.name == cName);
+        if (existedCategory) {
+            const existedProduct = existedCategory.products.find(p => p.name == pName);
+            if (!existedProduct) {
+                let newProduct: Product = {
+                    id: Math.random().toString(),
+                    name: pName
+                }
+                existedCategory.products.push(newProduct);
+                setCategoryData([...categoryData]);
+            } else {
+                alert("Product: " + pName + " exists")
+            }
+        } else {
+            alert("Category: " + cName + " not exists, please add Category first.")
+        }
+    }
 
     return (
         <div>
-            <OperationPanel addData={addCategory} />
-
-            <TreeView
-                className={classes.root}
-                // defaultExpanded={categories.map(c => c.id)}
-                defaultCollapseIcon={<ExpandMoreIcon/>}
-                defaultExpandIcon={<ChevronRightIcon/>}
-                multiSelect>
-                {
-                    categoryData.map(c =>
-                        <TreeItem nodeId={c.id} label={c.name}>
-                            {c.products.map(p => <TreeItem nodeId={p.id} label={p.name}/>)}
-                        </TreeItem>
-                    )
-                }
-            </TreeView>
+            <OperationPanel addCategory={addCategory} addProduct={addProduct}/>
+            <CategoryDisplay categories={categoryData} openIds={categoryData.map(c => c.id)} />
         </div>
     );
 };

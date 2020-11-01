@@ -1,0 +1,34 @@
+[
+  {
+    "id": "c1",
+    "name": "Applications",
+    "products": [
+      {
+        "id": "p1",
+        "name": "Calendar"
+      },
+      {
+        "id": "p2",
+        "name": "Chrome"
+      },
+      {
+        "id": "p3",
+        "name": "Webstorm"
+      }
+    ]
+  },
+  {
+    "id": "c2",
+    "name": "Documents",
+    "products": [
+      {
+        "id": "p4",
+        "name": "index.js"
+      },
+      {
+        "id": "p5",
+        "name": "tree-view.js"
+      }
+    ]
+  }
+]

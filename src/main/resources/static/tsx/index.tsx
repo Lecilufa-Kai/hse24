@@ -4,9 +4,6 @@ import {CategoryView} from "./components/CategoryView";
 
 
 ReactDOM.render(
-    <>
-        <CategoryView/>
-    </>
-    ,
+    <CategoryView/>,
     document.getElementById('root')
 )

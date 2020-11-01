@@ -1,9 +1,17 @@
 package com.scalablecapital.currencyapi.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.util.Arrays;
 import java.util.List;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Pattern;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.scalablecapital.currencyapi.dto.Category;
 import com.scalablecapital.currencyapi.dto.CurrencyConversionDto;
 import com.scalablecapital.currencyapi.dto.ReferenceRateDto;
 import com.scalablecapital.currencyapi.entity.Currency;
@@ -47,5 +55,30 @@ public class CurrencyController {
     @GetMapping(value = "currencies", produces = {"application/json"})
     public ResponseEntity<List<Currency>> getAllCurrencies() {
         return ResponseEntity.ok().body(currencyService.getAllCurrencies());
+    }
+
+    @GetMapping(value = "testData", produces = {"application/json"})
+    public ResponseEntity<List<Category>> getCategory() throws Exception {
+
+        ObjectMapper mapper = new ObjectMapper();
+        Category[] result = mapper.readValue(getFileFromResource("aa.json"),Category[].class);
+
+        return ResponseEntity.ok().body(Arrays.asList(result));
+    }
+
+    private File getFileFromResource(String fileName) throws URISyntaxException {
+
+        ClassLoader classLoader = getClass().getClassLoader();
+        URL resource = classLoader.getResource(fileName);
+        if (resource == null) {
+            throw new IllegalArgumentException("file not found! " + fileName);
+        } else {
+
+            // failed if files have whitespaces or special characters
+            //return new File(resource.getFile());
+
+            return new File(resource.toURI());
+        }
+
     }
 }
