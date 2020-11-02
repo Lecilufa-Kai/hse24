@@ -18,7 +18,7 @@ export interface Product {
 }
 
 
-const getCategoriesFromApi = (callback: (c: Category[]) => void) => {
+const getCategoriesFromApi = (callback: (categories: Category[]) => void) => {
     axios.request({
         method: 'get',
         url: 'http://localhost:8123/hse24/categories'
@@ -28,7 +28,7 @@ const getCategoriesFromApi = (callback: (c: Category[]) => void) => {
 }
 
 const addCategoryViaApi = (
-    callback: (c: Category[]) => void,
+    callback: (categories: Category[]) => void,
     existedCategories: Category[],
     newCategory: Category
 ) => {
@@ -42,7 +42,7 @@ const addCategoryViaApi = (
 }
 
 const deleteCategoryViaApi = (
-    callback: (c: Category[]) => void,
+    callback: (categories: Category[]) => void,
     existedCategories: Category[],
     id: string
 ) => {
@@ -52,11 +52,13 @@ const deleteCategoryViaApi = (
     }).then(function (response: AxiosResponse<Category>) {
         const newCategories = existedCategories.filter(c => c.id != id);
         callback([...newCategories]);
+    }).catch(reason => {
+        alert(reason);
     });
 }
 
 const addProductViaApi = (
-    callback: (c: Category[]) => void,
+    callback: (categories: Category[]) => void,
     existedCategories: Category[],
     existedCategory: Category,
     newProduct: Product
@@ -78,7 +80,7 @@ export const CategoryView: FunctionComponent
     const [loaded, setLoaded] = useState<boolean>(false);
 
     useEffect(() => {
-        if(!loaded){
+        if (!loaded) {
             getCategoriesFromApi(setCategoryData);
             setLoaded(true);
         }
@@ -90,7 +92,7 @@ export const CategoryView: FunctionComponent
             const newCategory: Category = {
                 name: cName,
             }
-            addCategoryViaApi(setCategoryData,categoryData,newCategory);
+            addCategoryViaApi(setCategoryData, categoryData, newCategory);
         } else {
             alert("Category: " + cName + " exist")
         }
@@ -99,7 +101,7 @@ export const CategoryView: FunctionComponent
     const deleteCategory = (cName: string) => {
         const existedCategory = categoryData.find(c => c.name == cName);
         if (existedCategory) {
-            deleteCategoryViaApi(setCategoryData,categoryData,existedCategory.id);
+            deleteCategoryViaApi(setCategoryData, categoryData, existedCategory.id);
         } else {
             alert("Category: " + cName + " not exist")
         }
@@ -115,7 +117,7 @@ export const CategoryView: FunctionComponent
                     price: price,
                     categoryId: existedCategory.id
                 }
-                addProductViaApi(setCategoryData,categoryData,existedCategory,newProduct);
+                addProductViaApi(setCategoryData, categoryData, existedCategory, newProduct);
             } else {
                 alert("Product: " + pName + " exist")
             }
@@ -127,7 +129,7 @@ export const CategoryView: FunctionComponent
     return (
         <div>
             <OperationPanel addCategory={addCategory} addProduct={addProduct} deleteCategory={deleteCategory}/>
-            <CategoryDisplay categories={categoryData} openIds={categoryData.map(c => c.id)} />
+            <CategoryDisplay categories={categoryData} openIds={categoryData.map(c => c.id)}/>
         </div>
     );
 };
