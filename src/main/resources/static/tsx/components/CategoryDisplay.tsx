@@ -9,7 +9,7 @@ import {Tooltip, Typography} from "@material-ui/core";
 
 interface CategoryTreeProp {
     categories: Category[],
-    openIds:string[]
+    openIds: string[]
 }
 
 const useStyles = makeStyles({
@@ -50,8 +50,8 @@ export const CategoryDisplay: FunctionComponent<CategoryTreeProp> = ({categories
                                     placement="right"
                                     title={
                                         <React.Fragment>
-                                            <Typography color="inherit">{p.name}</Typography>
-                                            <em>{`And here's ${p.id}`}</em> <b>{'some'}</b> <u>{'amazing content'}</u>.
+                                            <Typography color="inherit">Product: {p.name}</Typography>
+                                            <Typography color="inherit">Price: {p.price} EUR</Typography>
                                         </React.Fragment>
                                     }
                                 >

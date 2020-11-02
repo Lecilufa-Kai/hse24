@@ -6,8 +6,9 @@ import makeStyles from "@material-ui/core/styles/makeStyles";
 import RemoveIcon from '@material-ui/icons/Remove';
 
 export interface OperationPanelProp {
-    addCategory: (cName: string) => void
-    addProduct: (cName: string, pName: string) => void
+    addCategory: (cName: string) => void,
+    deleteCategory: (cName: string) => void,
+    addProduct: (cName: string, pName: string,price:string) => void
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -24,12 +25,14 @@ const useStyles = makeStyles((theme: Theme) =>
 export const OperationPanel: FunctionComponent<OperationPanelProp>
     = ({
            addCategory,
+           deleteCategory,
            addProduct
        }) => {
     const classes = useStyles();
 
     const [category, setCategory] = useState('')
-    const [product, setProduct] = useState('')
+    const [productName, setProductName] = useState('')
+    const [productPrice, setProductPrice] = useState('')
 
     return (
         <div>
@@ -39,19 +42,19 @@ export const OperationPanel: FunctionComponent<OperationPanelProp>
                 <Add/>
             </Fab>
             <Fab size="small" color="primary" aria-label="remove category" className={classes.iconStyle}
-                 onClick={() => {
-                 }}>
+                 onClick={() => deleteCategory(category)}>
                 <RemoveIcon style={{color:"white"}}/>
             </Fab>
 
-            <TextField id="product_name" label="Product" onChange={event => setProduct(event.target.value)}/>
+            <TextField id="product_name" label="Product Name" onChange={event => setProductName(event.target.value)}/>
+            &nbsp;&nbsp;
+            <TextField id="product_price" label="Product Price" onChange={event => setProductPrice(event.target.value)}/>
             <Fab size="small" color="primary" aria-label="add product" className={classes.iconStyle}
-                 onClick={() => addProduct(category,product)} >
+                 onClick={() => addProduct(category,productName,productPrice)} >
                 <Add/>
             </Fab>
             <Fab size="small" color="primary" aria-label="remove product" className={classes.iconStyle}
-                 onClick={() => {
-                 }}>
+                 onClick={() => { }}>
                 <RemoveIcon style={{color:"white"}}/>
             </Fab>
             <br/><br/>

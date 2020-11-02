@@ -1,0 +1,25 @@
+GET {{protocol}}{{host}}:{{port}}/hse24/currencies/reference-rate?source=USD&target=EUR
+content-type: application/json
+
+###
+GET {{protocol}}{{host}}:{{port}}/hse24/currencies/convert-rate?source=USD&target=GBP&sourceAmount=15
+content-type: application/json
+
+###
+GET {{protocol}}{{host}}:{{port}}/hse24/currencies
+content-type: application/json
+
+
+###  invalid parameters
+GET {{protocol}}{{host}}:{{port}}/hse24/currencies/reference-rate?source=A&target=EUK
+content-type: application/json
+
+###  invalid parameters
+GET {{protocol}}{{host}}:{{port}}/hse24/currencies/convert-rate?source=USD&target=GBP&sourceAmount=abc
+content-type: application/json
+
+###
+GET {{protocol}}{{host}}:{{port}}/hse24/categories
+content-type: application/json
+
+###
