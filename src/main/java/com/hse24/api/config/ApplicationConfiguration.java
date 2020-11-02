@@ -1,4 +1,4 @@
-package com.hse24.api;
+package com.hse24.api.config;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
