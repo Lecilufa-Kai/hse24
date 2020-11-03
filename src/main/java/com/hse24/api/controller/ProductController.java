@@ -4,10 +4,7 @@ import com.hse24.api.dto.ProductDto;
 import com.hse24.api.service.ProductService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Validated
 @RestController
@@ -31,5 +28,12 @@ public class ProductController {
         return ResponseEntity.ok().body(productService.addProduct(productDto));
     }
 
+    @DeleteMapping(value = "products/{id}", produces = {"application/json"})
+    public ResponseEntity deleteCategory(
+            @PathVariable Long id
+    ) {
+        productService.deleteById(id);
+        return ResponseEntity.ok().build();
+    }
 
 }

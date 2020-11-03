@@ -4,7 +4,7 @@ public class ProductDto {
     private long id;
     private String name;
     private Double price;
-
+    private String currency;
     private long categoryId;
 
     public long getId() {
@@ -37,5 +37,13 @@ public class ProductDto {
 
     public void setCategoryId(long categoryId) {
         this.categoryId = categoryId;
+    }
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
     }
 }

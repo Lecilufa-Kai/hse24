@@ -13,6 +13,7 @@ public class Product {
     private long id;
     private String name;
     private Double price;
+    private String currency;
 
     @ManyToOne(fetch = FetchType.LAZY)
     private Category category;
@@ -47,5 +48,13 @@ public class Product {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
     }
 }

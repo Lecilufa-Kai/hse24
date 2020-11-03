@@ -51,7 +51,7 @@ export const CategoryDisplay: FunctionComponent<CategoryTreeProp> = ({categories
                                     title={
                                         <React.Fragment>
                                             <Typography color="inherit">Product: {p.name}</Typography>
-                                            <Typography color="inherit">Price: {p.price} EUR</Typography>
+                                            <Typography color="inherit">Price: {p.price} {p.currency}</Typography>
                                         </React.Fragment>
                                     }
                                 >

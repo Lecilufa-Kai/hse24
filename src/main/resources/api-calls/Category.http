@@ -1,25 +1,10 @@
-GET {{protocol}}{{host}}:{{port}}/hse24/currencies/reference-rate?source=USD&target=EUR
-content-type: application/json
-
-###
-GET {{protocol}}{{host}}:{{port}}/hse24/currencies/convert-rate?source=USD&target=GBP&sourceAmount=15
-content-type: application/json
-
-###
-GET {{protocol}}{{host}}:{{port}}/hse24/currencies
-content-type: application/json
-
-
-###  invalid parameters
-GET {{protocol}}{{host}}:{{port}}/hse24/currencies/reference-rate?source=A&target=EUK
-content-type: application/json
-
-###  invalid parameters
-GET {{protocol}}{{host}}:{{port}}/hse24/currencies/convert-rate?source=USD&target=GBP&sourceAmount=abc
-content-type: application/json
-
 ###
 GET {{protocol}}{{host}}:{{port}}/hse24/categories
 content-type: application/json
 
 ###
+GET http://data.fixer.io/api/convert?access_key=bbac5b49d9915c7e9c7d64ed15618d79&from=GBP&to=JPY&amount=25
+content-type: application/json
+
+###
+GET http://data.fixer.io/api/latest?access_key=bbac5b49d9915c7e9c7d64ed15618d79
