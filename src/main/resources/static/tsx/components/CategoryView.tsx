@@ -123,6 +123,8 @@ const deleteProductViaApi = (
     });
 }
 
+const numberRegex = /^[+-]?\d+(\.\d+)?$/;
+
 export const CategoryView: FunctionComponent
     = () => {
 
@@ -139,6 +141,12 @@ export const CategoryView: FunctionComponent
     })
 
     const addCategory = (categoryName: string) => {
+
+        if(categoryName.trim() == ''){
+            alert("Category can't be empty")
+            return;
+        }
+
         const existedCategory = categoryData.find(c => c.name == categoryName);
         if (!existedCategory) {
             const newCategory: Category = {
@@ -160,6 +168,17 @@ export const CategoryView: FunctionComponent
     }
 
     const addProduct = (categoryName: string, productName: string, price: string, currency: string) => {
+
+        if(categoryName.trim() == '' || productName.trim() == '' || price.trim() == ''){
+            alert("Category or Product or Price can't be empty")
+            return;
+        }
+
+        if(!numberRegex.test(price)){
+            alert("Price must be a number")
+            return;
+        }
+
         const existedCategory = categoryData.find(c => c.name == categoryName);
         if (existedCategory) {
             const existedProduct = existedCategory.products.find(p => p.name == productName);
