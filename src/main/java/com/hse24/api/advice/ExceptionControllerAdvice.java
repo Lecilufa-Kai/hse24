@@ -2,7 +2,6 @@ package com.hse24.api.advice;
 
 import javax.validation.ConstraintViolationException;
 
-import com.hse24.api.exception.CurrencyNotFoundException;
 import com.hse24.api.dto.ErrorDto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,17 +36,6 @@ public class ExceptionControllerAdvice {
 
         HttpStatus statusCode = HttpStatus.BAD_REQUEST;
         logger.warn("Data validation error", ex);
-        return ResponseEntity.status(statusCode)
-                             .body(
-                                 buildErrorDto(statusCode.value(), ex.getMessage(), statusCode.toString())
-                             );
-    }
-
-    @ExceptionHandler({CurrencyNotFoundException.class})
-    public ResponseEntity<ErrorDto> handleCurrencyNotFoundException(CurrencyNotFoundException ex) {
-
-        HttpStatus statusCode = HttpStatus.NOT_FOUND;
-        logger.warn("Data not found error", ex);
         return ResponseEntity.status(statusCode)
                              .body(
                                  buildErrorDto(statusCode.value(), ex.getMessage(), statusCode.toString())
